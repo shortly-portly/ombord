@@ -2,22 +2,29 @@ defmodule OmbordWeb.Router do
   use OmbordWeb, :router
 
   pipeline :browser do
-    plug :accepts, ["html"]
-    plug :fetch_session
-    plug :fetch_live_flash
-    plug :put_root_layout, {OmbordWeb.LayoutView, :root}
-    plug :protect_from_forgery
-    plug :put_secure_browser_headers
+    plug(:accepts, ["html"])
+    plug(:fetch_session)
+    plug(:fetch_live_flash)
+    plug(:put_root_layout, {OmbordWeb.LayoutView, :root})
+    plug(:protect_from_forgery)
+    plug(:put_secure_browser_headers)
   end
 
   pipeline :api do
-    plug :accepts, ["json"]
+    plug(:accepts, ["json"])
   end
 
   scope "/", OmbordWeb do
-    pipe_through :browser
+    pipe_through(:browser)
 
-    live "/", PageLive, :index
+    live("/", PageLive, :index)
+
+    live("/templates", TemplateLive.Index, :index)
+    live("/templates/new", TemplateLive.Index, :new)
+    live("/templates/:id/edit", TemplateLive.Index, :edit)
+
+    live("/templates/:id", TemplateLive.Show, :show)
+    live("/templates/:id/show/edit", TemplateLive.Show, :edit)
   end
 
   # Other scopes may use custom stacks.
@@ -36,8 +43,8 @@ defmodule OmbordWeb.Router do
     import Phoenix.LiveDashboard.Router
 
     scope "/" do
-      pipe_through :browser
-      live_dashboard "/dashboard", metrics: OmbordWeb.Telemetry
+      pipe_through(:browser)
+      live_dashboard("/dashboard", metrics: OmbordWeb.Telemetry)
     end
   end
 end
