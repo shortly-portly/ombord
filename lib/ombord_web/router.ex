@@ -25,6 +25,13 @@ defmodule OmbordWeb.Router do
 
     live("/templates/:id", TemplateLive.Show, :show)
     live("/templates/:id/show/edit", TemplateLive.Show, :edit)
+
+    live "/activities", ActivityLive.Index, :index
+    live "/activities/new", ActivityLive.Index, :new
+    live "/activities/:id/edit", ActivityLive.Index, :edit
+
+    live "/activities/:id", ActivityLive.Show, :show
+    live "/activities/:id/show/edit", ActivityLive.Show, :edit
   end
 
   # Other scopes may use custom stacks.
