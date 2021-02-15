@@ -25,6 +25,7 @@ defmodule OmbordWeb.Router do
 
     live("/templates/:id", TemplateLive.Show, :show)
     live("/templates/:id/show/edit", TemplateLive.Show, :edit)
+    live("/templates/:id/activites/new", TemplateLive.Show, :new_activity)
 
     live "/activities", ActivityLive.Index, :index
     live "/activities/new", ActivityLive.Index, :new
