@@ -11,14 +11,25 @@ defmodule Ombord.Activities.Activity do
     field :communication_method, :string
     field :personnel, :string
 
+    belongs_to(:template, Ombord.Templates.Template)
+
     timestamps()
   end
 
-  @valid_attrs [:name, :function, :purpose, :issue, :due, :communication_method, :personnel]
+  @valid_attrs [
+    :name,
+    :function,
+    :purpose,
+    :issue,
+    :due,
+    :communication_method,
+    :personnel,
+    :template_id
+  ]
   @doc false
   def changeset(activity, attrs) do
     activity
     |> cast(attrs, @valid_attrs)
-    |> validate_required([:name])
+    |> validate_required([:name, :template_id])
   end
 end

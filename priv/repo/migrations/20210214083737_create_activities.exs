@@ -11,6 +11,8 @@ defmodule Ombord.Repo.Migrations.CreateActivities do
       add :communication_method, :string
       add :personnel, :string
 
+      add :template_id, references(:templates)
+
       timestamps()
     end
 

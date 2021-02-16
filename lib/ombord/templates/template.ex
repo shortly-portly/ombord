@@ -5,6 +5,8 @@ defmodule Ombord.Templates.Template do
   schema "templates" do
     field :name, :string
 
+    has_many(:activities, Ombord.Activities.Activity)
+
     timestamps()
   end
 

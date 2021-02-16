@@ -24,12 +24,10 @@ defmodule OmbordWeb.ActivityLive.FormComponent do
   end
 
   def handle_event("save", %{"activity" => activity_params}, socket) do
-    IO.inspect(socket.assigns.action, label: "ACTION")
-
     save_activity(socket, socket.assigns.action, activity_params)
   end
 
-  defp save_activity(socket, :edit, activity_params) do
+  defp save_activity(socket, :edit_activity, activity_params) do
     case Activities.update_activity(socket.assigns.activity, activity_params) do
       {:ok, _activity} ->
         {:noreply,
@@ -43,6 +41,8 @@ defmodule OmbordWeb.ActivityLive.FormComponent do
   end
 
   defp save_activity(socket, :new_activity, activity_params) do
+    activity_params = Map.put(activity_params, "template_id", socket.assigns.template.id)
+
     case Activities.create_activity(activity_params) do
       {:ok, _activity} ->
         {:noreply,

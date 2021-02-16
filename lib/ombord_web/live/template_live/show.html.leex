@@ -9,11 +9,12 @@
     return_to: Routes.template_show_path(@socket, :show, @template) %>
 <% end %>
 
-<%= if @live_action in [:new_activity] do %>
+<%= if @live_action in [:new_activity, :edit_activity] do %>
   <%= live_modal @socket, OmbordWeb.ActivityLive.FormComponent,
     id: :new_activity,
     title: @page_title,
     action: @live_action,
+    template: @template,
     activity: @activity,
     return_to: Routes.template_show_path(@socket, :show, @template) %>
 <% end %>
@@ -27,6 +28,24 @@
   </li>
 
 </ul>
+
+<h3>Activites</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="activities">
+    <%= for activity <- @template.activities do %>
+      <tr id="activity-<%= activity.id %>">
+        <td><%= activity.name %></td>
+        <td><%= live_patch "Edit", to: Routes.template_show_path(@socket, :edit_activity, @template, activity.id) %></span>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
 
 <span><%= live_patch "Edit", to: Routes.template_show_path(@socket, :edit, @template), class: "button" %></span>
 <span><%= live_patch "New Activity", to: Routes.template_show_path(@socket, :new_activity, @template) %></span>

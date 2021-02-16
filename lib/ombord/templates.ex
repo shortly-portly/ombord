@@ -35,7 +35,11 @@ defmodule Ombord.Templates do
       ** (Ecto.NoResultsError)
 
   """
-  def get_template!(id), do: Repo.get!(Template, id)
+  def get_template!(id) do
+    Template
+    |> preload(:activities)
+    |> Repo.get(id)
+  end
 
   @doc """
   Creates a template.
