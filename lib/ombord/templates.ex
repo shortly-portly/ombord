@@ -22,6 +22,15 @@ defmodule Ombord.Templates do
   end
 
   @doc """
+  Return the list of templates suitable for use by a HTML Select.
+  """
+  def select_templates() do
+    Template
+    |> select([t], {t.name, t.id})
+    |> Repo.all()
+  end
+
+  @doc """
   Gets a single template.
 
   Raises `Ecto.NoResultsError` if the Template does not exist.

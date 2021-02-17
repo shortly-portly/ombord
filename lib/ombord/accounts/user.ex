@@ -9,6 +9,8 @@ defmodule Ombord.Accounts.User do
     field :hashed_password, :string
     field :confirmed_at, :naive_datetime
 
+    belongs_to :template, Ombord.Templates.Template
+
     timestamps()
   end
 
@@ -31,7 +33,8 @@ defmodule Ombord.Accounts.User do
   """
   def registration_changeset(user, attrs, opts \\ []) do
     user
-    |> cast(attrs, [:email, :password])
+    |> cast(attrs, [:email, :password, :template_id])
+    |> validate_required([:template_id])
     |> validate_email()
     |> validate_password(opts)
   end

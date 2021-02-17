@@ -15,6 +15,11 @@
   <%= password_input f, :password, required: true %>
   <%= error_tag f, :password %>
 
+  <%= label f, :template_id %>
+  <%= select f, :template_id, @templates %>
+  <%= error_tag f, :template_id %>
+
+
   <div>
     <%= submit "Register" %>
   </div>
