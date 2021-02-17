@@ -34,6 +34,12 @@
   <thead>
     <tr>
       <th>Name</th>
+      <th>Function</th>
+      <th>Purpose</th>
+      <th>Issue</th>
+      <th>Due</th>
+      <th>Method</th>
+      <th>Personnel</th>
       <th></th>
     </tr>
   </thead>
@@ -41,7 +47,13 @@
     <%= for activity <- @template.activities do %>
       <tr id="activity-<%= activity.id %>">
         <td><%= activity.name %></td>
-        <td><%= live_patch "Edit", to: Routes.template_show_path(@socket, :edit_activity, @template, activity.id) %></span>
+        <td><%= activity.function %></td>
+        <td><%= activity.purpose %></td>
+        <td><%= activity.issue %></td>
+        <td><%= activity.due %></td>
+        <td><%= activity.communication_method %></td>
+        <td><%= activity.personnel %></td>
+        <td><%= live_patch "Edit", to: Routes.template_show_path(@socket, :edit_activity, @template, activity.id) %></td>
       </tr>
     <% end %>
   </tbody>
