@@ -3,13 +3,11 @@ defmodule OmbordWeb.UserRegistrationController do
 
   alias Ombord.Accounts
   alias Ombord.Accounts.User
-  alias Ombord.Templates
   alias OmbordWeb.UserAuth
 
   def new(conn, _params) do
     changeset = Accounts.change_user_registration(%User{})
-    templates = Templates.select_templates()
-    render(conn, "new.html", changeset: changeset, templates: templates)
+    render(conn, "new.html", changeset: changeset)
   end
 
   def create(conn, %{"user" => user_params}) do

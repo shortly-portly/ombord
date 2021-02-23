@@ -15,10 +15,13 @@
   <%= password_input f, :password, required: true %>
   <%= error_tag f, :password %>
 
-  <%= label f, :template_id %>
-  <%= select f, :template_id, @templates %>
-  <%= error_tag f, :template_id %>
+  <%= label f, :first_name %>
+  <%= text_input f, :first_name %>
+  <%= error_tag f, :first_name %>
 
+  <%= label f, :last_name %>
+  <%= text_input f, :last_name %>
+  <%= error_tag f, :last_name %>
 
   <div>
     <%= submit "Register" %>

@@ -8,8 +8,10 @@ defmodule Ombord.Accounts.User do
     field :password, :string, virtual: true
     field :hashed_password, :string
     field :confirmed_at, :naive_datetime
+    field :first_name, :string
+    field :last_name, :string
 
-    belongs_to :template, Ombord.Templates.Template
+    has_one :pack, Ombord.Packs.Pack
 
     timestamps()
   end
@@ -33,10 +35,15 @@ defmodule Ombord.Accounts.User do
   """
   def registration_changeset(user, attrs, opts \\ []) do
     user
-    |> cast(attrs, [:email, :password, :template_id])
-    |> validate_required([:template_id])
+    |> cast(attrs, [:email, :password, :first_name, :last_name])
     |> validate_email()
     |> validate_password(opts)
+  end
+
+  def new_starter_changeset(user, attrs, opts \\ []) do
+    user
+    |> registration_changeset(attrs, opts)
+    |> cast_assoc(:pack, with: &Ombord.Packs.Pack.changeset/2)
   end
 
   defp validate_email(changeset) do

@@ -8,7 +8,7 @@ defmodule Ombord.Repo.Migrations.CreateEvents do
       add :completed, :date
 
       add :activity_id, references(:activities)
-      add :user_id, references(:users)
+      add :pack_id, references(:packs)
 
       timestamps()
     end

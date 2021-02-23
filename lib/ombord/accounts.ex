@@ -6,6 +6,7 @@ defmodule Ombord.Accounts do
   import Ecto.Query, warn: false
   alias Ombord.Repo
   alias Ombord.Accounts.{User, UserToken, UserNotifier}
+  alias Ombord.Packs.Pack
 
   ## Database getters
 
@@ -57,7 +58,9 @@ defmodule Ombord.Accounts do
       ** (Ecto.NoResultsError)
 
   """
-  def get_user!(id), do: Repo.get!(User, id)
+  def get_user!(id) do
+    Repo.get!(User, id)
+  end
 
   ## User registration
 
@@ -80,6 +83,15 @@ defmodule Ombord.Accounts do
   end
 
   @doc """
+  Creates a new starter
+  """
+  def register_new_starter(attrs) do
+    %User{}
+    |> User.new_starter_changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
   Returns an `%Ecto.Changeset{}` for tracking user changes.
 
   ## Examples
@@ -90,6 +102,32 @@ defmodule Ombord.Accounts do
   """
   def change_user_registration(%User{} = user, attrs \\ %{}) do
     User.registration_changeset(user, attrs, hash_password: false)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking new starter changes.
+
+  ## Examples
+      iex> change_new_starter_registration(user)
+      %Ecto.Changeset(date: %User{})
+  """
+  def change_new_starter_registration(%User{} = user, attrs \\ %{}) do
+    User.new_starter_changeset(user, attrs, hash_password: false)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking Admin changes. This differs from
+  `change_user_registration` in that it creates/updates the associated organisation
+  details.
+
+  ## Examples
+
+      iex> change_user_registration(user)
+      %Ecto.Changeset{data: %User{}}
+
+  """
+  def new_starter_registration(%User{} = user, attrs \\ %{}) do
+    User.new_starter_changeset(user, attrs, has_password: false)
   end
 
   ## Settings

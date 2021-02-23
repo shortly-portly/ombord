@@ -37,6 +37,13 @@ defmodule OmbordWeb.Router do
 
     live "/activities/:id", ActivityLive.Show, :show
     live "/activities/:id/show/edit", ActivityLive.Show, :edit
+
+    live("/new_starters/", NewStarterLive.Index, :index)
+    live("/new_starters/new", NewStarterLive.Index, :new)
+    live("/new_starters/:id/edit", NewStarterLive.Index, :edit)
+
+    live("/new_starters/:id", NewStarterLive.Show, :show)
+    live("/new_starers/:id/show/edit", NewStarterLive.Show, :edit)
   end
 
   # Other scopes may use custom stacks.

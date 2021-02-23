@@ -1,0 +1,37 @@
+<h1>New Starters</h1>
+
+<%= if @live_action in [:new, :edit] do %>
+  <%= live_modal @socket, OmbordWeb.NewStarterLive.FormComponent,
+    id: @user.id || :new,
+    title: @page_title,
+    action: @live_action,
+    user: @user,
+    return_to: Routes.new_starter_index_path(@socket, :index) %>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>First Name</th>
+      <th>Last Name</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="new_starters">
+    <%= for new_starter <- @new_starters do %>
+      <tr id="new_starter-<%= new_starter.id %>">
+        <td><%= new_starter.user.first_name %></td>
+        <td><%= new_starter.user.last_name %></td>
+
+        <td>
+          <span><%= live_redirect "Show", to: Routes.new_starter_show_path(@socket, :show, new_starter) %></span>
+          <span><%= live_patch "Edit", to: Routes.new_starter_index_path(@socket, :edit, new_starter) %></span>
+          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: new_starter.id, data: [confirm: "Are you sure?"] %></span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<span><%= live_patch "New Starter", to: Routes.new_starter_index_path(@socket, :new) %></span>
